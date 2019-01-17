@@ -2,8 +2,24 @@ const express = require('express');
 const Curso = require("../models/curso.js").model;
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
+const bearerToken = require('express-bearer-token');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
+
+router.use(bearerToken());
+
+router.use(function (req, res, next) {
+    jwt.verify(req.token, process.env.API_SECRET, function(err) {
+        if(err) {
+            res.status(401).json({msg:"Acceso no autorizado"})
+        } else {
+            next();
+        }
+    });
+});
+
+
 
 router.post('/', function(req, res) {
     Curso(req.body).save({validateBeforeSave: true})
