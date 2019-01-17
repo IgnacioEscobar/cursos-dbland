@@ -1,11 +1,9 @@
 const express = require('express');
 const Curso = require("../models/curso.js").model;
-const { check, validationResult } = require('express-validator/check');
+const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const router = express.Router();
-
-router.use(express.json());
 
 router.post('/', function(req, res) {
     Curso(req.body).save({validateBeforeSave: true})
@@ -46,6 +44,7 @@ router.get("/:id/alumnos", function (req, res){
 
 module.exports = router;
 
+// Dada una lista de alumnos, devuelve el de mayor nota
 function alumnoDestacado (alumnos){
     return alumnos.reduce((destacado, actual) => destacado.nota > actual.nota ? destacado : actual)
 }
@@ -59,5 +58,4 @@ function whitelistParameters (req, success, failure){
     } else {
         failure()
     }
-
 }
