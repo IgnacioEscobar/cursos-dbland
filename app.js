@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bearerToken());
 
 app.use(function (req, res, next) {
-  jwt.verify(req.token, "Sarasa", function(err) {
+  jwt.verify(req.token, process.env.API_SECRET, function(err) {
     if(err) {
       res.status(401).json({msg:"Acceso no autorizado"})
     } else {
