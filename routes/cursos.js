@@ -47,10 +47,12 @@ router.delete("/:id",function (req, res){
         .catch(err => res.status(404).json({ msg: "No se pudo eliminar el curso: "+ err.message}))
 });
 
-router.get("/:id/alumnos", function (req, res){
+router.get("/:id/alumnos",[
+    check("destacado").optional().isBoolean().toBoolean()
+], function (req, res){
     Curso.getById(req.params.id)
         .then(results => {
-            if(req.query.destacado == 1){
+            if(req.query.destacado === true){
                 res.status(200).json(alumnoDestacado(results.alumnos))
             }else{
                 res.status(200).json(results.alumnos)
