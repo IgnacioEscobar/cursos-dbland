@@ -2,8 +2,6 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const bearerToken = require('express-bearer-token');
-const jwt = require('jsonwebtoken');
 const logger = require('morgan');
 
 const mongoose = require('mongoose');
@@ -23,17 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bearerToken());
 
-app.use(function (req, res, next) {
-  jwt.verify(req.token, process.env.API_SECRET, function(err) {
-    if(err) {
-      res.status(401).json({msg:"Acceso no autorizado"})
-    } else {
-      next();
-    }
-  });
-});
 
 
 app.use('/', indexRouter);

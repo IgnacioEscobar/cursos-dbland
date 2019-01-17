@@ -1,0 +1,87 @@
+    openapi: 3.0.0
+    info: 
+      title: Cursos DBlandIT
+      description: Una API REST que permita administrar sus clientes y los cursos que dicta DBlandIT. 
+        </br> Demo token <span style="color:#E8451C;font-weight:bold;"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As </span>
+      version: ALPHA
+    servers:
+      - url: http://localhost:3000
+        description: Server local
+    tags:
+    - name: "cursos"
+      description: "Acceso a creacion y visualizacion de cursos"
+    security:
+    - bearerAuth: [] 
+    paths:
+      /cursos:
+        get:
+          summary: Retorna una lista de cursos
+          tags:
+          - "cursos"
+          parameters:
+          - in: query
+            name: anno
+            schema:
+              type: integer
+            required: false
+            description: Filtrar resultados por el año indicado
+          - in: query
+            name: duracion
+            schema:
+              type: integer
+            required: false
+            description: Filtrar resultados por la duracion indicada
+          responses:
+            '200':    # status code
+              description: Un array JSON que contiene la lista de cursos
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      $ref: "#/components/schemas/Curso"
+            '401':    # status code
+              description: Acceso no autorizado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+                      
+    components:
+      securitySchemes:
+        bearerAuth:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+      schemas:
+        Alumno:
+          type: object
+          properties:
+            apellido:
+              type: "string"
+            nombre:
+              type: "string"
+            direccion:
+              type: "string"
+            dni:
+              type: "integer"
+            nota:
+              type: "integer"
+        Curso:
+          type: object
+          properties:
+            anno:
+              type: "integer"
+            tema:
+              type: "string"
+            duracion:
+              type: "integer"
+            alumnos:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Alumno"
+        Respuesta:
+          type: object
+          properties:
+            msg:
+              type: "string"
