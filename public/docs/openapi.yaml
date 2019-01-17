@@ -1,8 +1,8 @@
     openapi: 3.0.0
     info: 
       title: Cursos DBlandIT
-      description: Una API REST que permita administrar sus clientes y los cursos que dicta DBlandIT. 
-        </br> Demo token <span style="color:#E8451C;font-weight:bold;"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As </span>
+      description: Una API REST que permita administrar los cursos que dicta la empresa DBlandIT. 
+        </br> Demo token JWT ( Todos los endpoint requieren autenticacion )<span style="color:#E8451C;font-weight:bold;"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As </span>
       version: ALPHA
     servers:
       - url: http://localhost:3000
@@ -46,7 +46,101 @@
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
-                      
+        post:
+          summary: Agrega un curso a la lista
+          tags:
+          - "cursos"
+          requestBody:
+            description: Un curso para agregar a la lista
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Curso'
+          responses:
+            '200':    # status code
+              description: Curso agregado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+            '401':    # status code
+              description: Acceso no autorizado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+      /cursos/{id}:
+        delete:
+          summary: Elimina un curso
+          tags:
+          - "cursos"
+          parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: Id del curso que se desea eliminar
+          responses:
+            '200':    # status code
+              description: Curso eliminado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+            '404':    # status code
+              description: Recurso no encontrado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+            '401':    # status code
+              description: Acceso no autorizado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+      /cursos/{id}/alumnos:
+        get:
+          summary: Retorna una lista de alumnos
+          tags:
+          - "cursos"
+          parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: Id del curso del cual se desean consultar los alumnos
+          - in: query
+            name: destacado
+            schema:
+              type: boolean
+            required: false
+            description: (True) Obtener el alumno con nota mas alta
+          responses:
+            '200':    # status code
+              description: Un array JSON de alumnos
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Alumno"
+            '404':    # status code
+              description: Recurso no encontrado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+            '401':    # status code
+              description: Acceso no autorizado
+              content:
+                application/json:
+                  schema: 
+                    $ref: "#/components/schemas/Respuesta"
+          
     components:
       securitySchemes:
         bearerAuth:
