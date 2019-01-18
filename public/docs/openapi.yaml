@@ -5,6 +5,8 @@
         </br> Demo token JWT ( Todos los endpoint requieren autenticacion )<span style="color:#E8451C;font-weight:bold;"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As </span>
       version: ALPHA
     servers:
+      - url: http://api.iescobar.cf
+        description: Live demo
       - url: http://localhost:3000
         description: Server local
     tags:
