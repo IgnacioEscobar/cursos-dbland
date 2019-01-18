@@ -2,8 +2,9 @@
     info: 
       title: Cursos DBlandIT
       description: Una API REST que permita administrar los cursos que dicta la empresa DBlandIT. 
-        </br> Demo token JWT ( Todos los endpoint requieren autenticacion )<span style="color:#E8451C;font-weight:bold;"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As </span>
-      version: ALPHA
+        </br> Demo token JWT ( Todos los endpoint requieren autenticacion )
+        <span style="color:#E8451C;font-weight:bold;display:block;width:600px;word-wrap:break-word;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As</span>
+      version: 1.0.0
     servers:
       - url: http://api.iescobar.cf
         description: Live demo
@@ -48,6 +49,8 @@
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Acceso no autorizado
         post:
           summary: Agrega un curso a la lista
           tags:
@@ -66,12 +69,16 @@
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Curso agregado
             '401':    # status code
               description: Acceso no autorizado
               content:
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Acceso no autorizado
       /cursos/{id}:
         delete:
           summary: Elimina un curso
@@ -91,18 +98,24 @@
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Curso eliminado
             '404':    # status code
               description: Recurso no encontrado
               content:
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: "No se pudo eliminar el curso: [Descripcion del error]"
             '401':    # status code
               description: Acceso no autorizado
               content:
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Acceso no autorizado
       /cursos/{id}/alumnos:
         get:
           summary: Retorna una lista de alumnos
@@ -136,12 +149,16 @@
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: "No se pudieron recuperar los alumnos: [Descripcion del error]"
             '401':    # status code
               description: Acceso no autorizado
               content:
                 application/json:
                   schema: 
                     $ref: "#/components/schemas/Respuesta"
+                  example:
+                    msg: Acceso no autorizado
           
     components:
       securitySchemes:
@@ -163,6 +180,11 @@
               type: "integer"
             nota:
               type: "integer"
+          example:
+            dni: 37161487
+            nombre: Brewer
+            apellido: Freeman
+            nota: 7
         Curso:
           type: object
           properties:
@@ -176,6 +198,13 @@
               type: "array"
               items:
                 $ref: "#/components/schemas/Alumno"
+              example:
+              - nombre: Jessica Smith
+          example:
+            anno: 2020
+            tema: "Bussines Inteligence"
+            duracion: 30
+            alumnos: []
         Respuesta:
           type: object
           properties:
