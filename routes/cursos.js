@@ -23,7 +23,7 @@ router.use(function (req, res, next) {
 
 router.post('/', function(req, res) {
     Curso(req.body).save({validateBeforeSave: true})
-        .then(result => res.status(200).json({ msg: "Curso creado"}))
+        .then(result => res.status(200).json(result))
         .catch(err => res.status(404).json({ msg: "No se pudo crear el curso: " + err.message}))
 });
 
@@ -42,8 +42,8 @@ router.get("/",[
 });
 
 router.delete("/:id",function (req, res){
-    Curso.deleteOne({ "_id": req.params.id })
-        .then(result => res.status(200).json({ msg: "Curso eliminado"}))
+    Curso.findOneAndRemove({ "_id": req.params.id })
+        .then(result => res.status(200).json(result))
         .catch(err => res.status(404).json({ msg: "No se pudo eliminar el curso: "+ err.message}))
 });
 
