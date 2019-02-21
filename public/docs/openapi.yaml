@@ -6,8 +6,6 @@ info:
     <span style="color:#E8451C;font-weight:bold;display:block;width:600px;word-wrap:break-word;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.9kKTP8noR4tIDbdUEpkLHKnqGFxqAsWfIg-z4kSn5As</span>
   version: 1.1.0
 servers:
-  - url: http://api.iescobar.cf
-    description: Live demo
   - url: http://localhost:3000
     description: Server local
 tags:
